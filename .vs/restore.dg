@@ -1,0 +1,4 @@
+#:G:\CommonTeam\AspNetCoreWebSocketEngine\src\AspNetCoreEngine\AspNetCoreEngine.WebSocket.Main.xproj
+G:\CommonTeam\AspNetCoreWebSocketEngine\src\AspNetCoreEngine\AspNetCoreEngine.WebSocket.Main.xproj|G:\CommonTeam\AspNetCoreWebSocketEngine\src\Engine.Common\Engine.Common.xproj
+G:\CommonTeam\AspNetCoreWebSocketEngine\src\AspNetCoreEngine\AspNetCoreEngine.WebSocket.Main.xproj|G:\CommonTeam\AspNetCoreWebSocketEngine\src\Engine.Core\Engine.Core.xproj
+G:\CommonTeam\AspNetCoreWebSocketEngine\src\Engine.Core\Engine.Core.xproj|G:\CommonTeam\AspNetCoreWebSocketEngine\src\Engine.Common\Engine.Common.xproj
