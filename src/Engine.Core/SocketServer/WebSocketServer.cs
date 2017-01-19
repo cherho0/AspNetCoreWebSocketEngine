@@ -44,10 +44,10 @@ namespace Engine.Core.SocketServer
 
         private void Client_OnConnect(object sender, DataEventArgs<string, SocketClient.SocketClient> e)
         {
-            Task.Factory.StartNew(async () =>
-            {
-                await SocketClientMgr.Instance.SendAll("test");
-            });
+            //Task.Factory.StartNew(async () =>
+            //{
+            //    await SocketClientMgr.Instance.SendAll(e.Arg1 + "连接上了");
+            //});
             Console.WriteLine(e.Arg1);
         }
 

@@ -40,6 +40,13 @@ namespace Engine.Core.Kernel
                     await next();
                 }
             });
+            BuildBroadCast();
+
+        }
+
+        private void BuildBroadCast()
+        {
+            
         }
     }
 }

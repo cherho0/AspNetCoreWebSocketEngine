@@ -24,21 +24,20 @@
     </style>
 </head>
 <body>
-    <h1>WebSocket Test Page</h1>
-    <p id="stateLabel">Ready to connect...</p>
+    <h1>websocket 测试</h1>
+    <p id="stateLabel">准备连接</p>
     <div>
-        <label for="connectionUrl">WebSocket Server URL:</label>
+        <label for="connectionUrl">服务器地址:</label>
         <input id="connectionUrl" />
-        <button id="connectButton" type="submit">Connect</button>
+        <button id="connectButton" type="submit">连接</button>
     </div>
     <div>
-        <label for="sendMessage">Message to send:</label>
+        <label for="sendMessage">发送消息:</label>
         <input id="sendMessage" disabled />
-        <button id="sendButton" type="submit" disabled>Send</button>
-        <button id="closeButton" disabled>Close Socket</button>
+        <button id="sendButton" type="submit" disabled>发送</button>
+        <button id="closeButton" disabled>关闭连接</button>
     </div>
-    <p>Note: When connected to the default server (i.e. the server in the address bar ;)), the message "ServerClose" will cause the server to close the connection. Similarly, the message "ServerAbort" will cause the server to forcibly terminate the connection without a closing handshake</p>
-    <h2>Communication Log</h2>
+    <h2>消息</h2>
     <table style="width: 800px">
         <thead>
             <tr>
@@ -125,8 +124,8 @@
             var data = sendMessage.value;
             socket.send(data);
             commsLog.innerHTML += '<tr>' +
-                '<td class="commslog-client">Client</td>' +
-                '<td class="commslog-server">Server</td>' +
+                '<td class="commslog-client">客户端</td>' +
+                '<td class="commslog-server">服务端</td>' +
                 '<td class="commslog-data">' + data + '</td>'
             '</tr>';
         }
@@ -149,8 +148,8 @@
             socket.onerror = updateState;
             socket.onmessage = function (event) {
                 commsLog.innerHTML += '<tr>' +
-                    '<td class="commslog-server">Server</td>' +
-                    '<td class="commslog-client">Client</td>' +
+                    '<td class="commslog-server">服务端</td>' +
+                    '<td class="commslog-client">客户端</td>' +
                     '<td class="commslog-data">' + event.data + '</td>'
                 '</tr>';
             };
