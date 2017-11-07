@@ -10,6 +10,6 @@ namespace Engine.Core
     /// </summary>
     public abstract class BasePub
     {
-
+        protected abstract void Execute();
     }
 }

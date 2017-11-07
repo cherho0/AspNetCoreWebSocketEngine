@@ -27,3 +27,7 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
+.vs/AspNetCoreEngine.WebSocket/v15/Server/sqlite3/db.lock
+.vs/AspNetCoreEngine.WebSocket/v15/Server/sqlite3/storage.ide
+.vs/AspNetCoreEngine.WebSocket/v15/Server/sqlite3/storage.ide-shm
+.vs/AspNetCoreEngine.WebSocket/v15/Server/sqlite3/storage.ide-wal

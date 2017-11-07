@@ -26,7 +26,7 @@ namespace Engine.Core.SocketClient
         /// 当收到消息
         /// </summary>
         public event EventHandler<DataEventArgs<string, SocketClient>> OnReceive;
-
+        
         public event EventHandler<DataEventArgs<string, SocketClient>> OnClose;
 
         public event EventHandler<DataEventArgs<string, SocketClient>> OnConnect;
