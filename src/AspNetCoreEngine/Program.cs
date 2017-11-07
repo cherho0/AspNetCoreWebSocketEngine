@@ -16,7 +16,7 @@ namespace AspNetCoreEngine
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
-                .UseUrls("http://10.101.134.44:5000/")
+                .UseUrls("http://10.101.28.36:5000/")
                 .Build();
 
             host.Run();

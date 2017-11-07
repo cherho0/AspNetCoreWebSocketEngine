@@ -55,7 +55,8 @@ namespace Engine.Core.SocketServer
         {
             Task.Factory.StartNew(async () =>
             {
-                await e.Arg2.SendMsg(e.Arg1);
+               await SocketClientMgr.Instance.SendAll(e.Arg1);
+                //await e.Arg2.SendMsg(e.Arg1);
             });
             Console.WriteLine(e.Arg1);
         }

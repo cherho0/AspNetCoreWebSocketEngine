@@ -7,7 +7,6 @@
     <OutputType>Exe</OutputType>
     <PackageId>AspNetCoreEngine</PackageId>
     <RuntimeFrameworkVersion>2.0.0</RuntimeFrameworkVersion>
-    <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
 
   <ItemGroup>
