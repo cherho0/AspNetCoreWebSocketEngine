@@ -7,6 +7,7 @@
     <OutputType>Exe</OutputType>
     <PackageId>AspNetCoreEngine</PackageId>
     <RuntimeFrameworkVersion>2.0.0</RuntimeFrameworkVersion>
+    <StartupObject>AspNetCoreEngine.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\TestServices\TestServices.csproj" />
     <ProjectReference Include="..\Engine.Common\Engine.Common.csproj" />
     <ProjectReference Include="..\Engine.Core\Engine.Core.csproj" />
   </ItemGroup>
@@ -36,10 +38,14 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.WebSockets.Server" Version="0.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.0.0" />
+    <PackageReference Include="NLog" Version="4.5.0-beta07" />
+    <PackageReference Include="NLog.Config" Version="4.5.0-beta07" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.5.0-beta04" />
+    <PackageReference Include="TCBase.Component.Logging" Version="1.4.0" />
   </ItemGroup>
 
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
-    <Exec Command="bower install" />
+    <!--<Exec Command="bower install" />-->
     <Exec Command="dotnet bundle" />
   </Target>
 

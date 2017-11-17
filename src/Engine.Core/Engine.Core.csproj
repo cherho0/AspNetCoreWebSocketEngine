@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\TestServices\TestServices.csproj" />
     <ProjectReference Include="..\Engine.Common\Engine.Common.csproj" />
   </ItemGroup>
 

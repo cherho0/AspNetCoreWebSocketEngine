@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Engine.Common;
 using Microsoft.AspNetCore.Http;
+using TestServices;
 
 namespace Engine.Core.SocketClient
 {
@@ -26,7 +27,7 @@ namespace Engine.Core.SocketClient
         /// 当收到消息
         /// </summary>
         public event EventHandler<DataEventArgs<string, SocketClient>> OnReceive;
-        
+
         public event EventHandler<DataEventArgs<string, SocketClient>> OnClose;
 
         public event EventHandler<DataEventArgs<string, SocketClient>> OnConnect;

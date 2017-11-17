@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AspNetCoreEngine
 {
@@ -11,24 +13,31 @@ namespace AspNetCoreEngine
         public static void Main(string[] args)
         {
             Cfg.Init();
+            Task.Factory.StartNew(Call);
+            var port = Cfg.GetCfg<int>("Port");
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
                 .UseStartup<Startup>()
-                .UseUrls("http://10.101.28.36:5000/")
+                .UseUrls("http://*:"+ port + "/")
                 .Build();
 
             host.Run();
-            Call();
-
         }
 
         private static void Call()
         {
             var str = Console.ReadLine();
             Console.WriteLine(str);
-            Call();
+            if (str == "exit")
+            {
+                Console.WriteLine("over");
+            }
+            else
+            {
+                Call();
+            }
+            
         }
     }
 }

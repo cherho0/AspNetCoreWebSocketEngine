@@ -10,6 +10,9 @@ namespace Engine.Core
     /// </summary>
     public abstract class BasePub
     {
-        protected abstract void Execute();
+        /// <summary>
+        /// 收到消息
+        /// </summary>
+        protected abstract void RecvMsg();
     }
 }
