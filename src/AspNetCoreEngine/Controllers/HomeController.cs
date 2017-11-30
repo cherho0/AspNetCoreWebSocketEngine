@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
 using TestServices;
+using AspNetCoreEngine.Filter;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AspNetCoreEngine.Controllers
 {
-
+    [ActionFilter]
     public class HomeController : Controller
     {
         public ICommonService commonService;
@@ -19,7 +21,6 @@ namespace AspNetCoreEngine.Controllers
             commonService = cms;
 
         }
-
         public IActionResult Index()
         {
             var world = commonService.GetWorld();

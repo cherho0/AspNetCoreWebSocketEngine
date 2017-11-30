@@ -60,11 +60,11 @@ namespace Engine.Core.SocketClient
 
         }
 
-        public void Close(string sessionId)
+        public async Task CloseAsync(string sessionId)
         {
             var client = _sessionclients[sessionId];
             _sessionclients.Remove(sessionId);
-            client.Close();
+            await client.Close();
 
         }
     }

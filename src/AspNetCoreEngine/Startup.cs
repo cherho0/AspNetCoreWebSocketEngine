@@ -110,10 +110,11 @@ namespace AspNetCoreEngine
             var commonService = app.ApplicationServices.GetService<ICommonService>();
             var str = commonService.GetWorld();
             Console.WriteLine(str);
-           
 
-            Kernel.CreateKernel(app);
-            
+
+            //注册websocket服务
+            app.UseWebSocketKernel();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
