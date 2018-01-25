@@ -12,17 +12,17 @@ namespace Engine.Core.Users
         /// <summary>
         /// sessionId
         /// </summary>
-        public string SessionId { get; internal set; }
+        public string SessionId { get;  set; }
 
         /// <summary>
         /// 名称
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get;  set; }
 
         /// <summary>
         /// 密码
         /// </summary>
-        public string Password { get; internal set; }
+        public string Password { get;  set; }
 
         /// <summary>
         /// 扩展属性

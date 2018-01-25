@@ -23,7 +23,7 @@ namespace Engine.Core.Users
         {
             if (S2Users.ContainsKey(user.SessionId))
             {
-                throw new Exception("已经有这个用户了");
+                //throw new Exception("已经有这个用户了");
             }
             else
             {
@@ -32,7 +32,7 @@ namespace Engine.Core.Users
 
             if (N2Users.ContainsKey(user.Name))
             {
-                throw new Exception("已经有这个用户了");
+                //throw new Exception("已经有这个用户了");
             }
             else
             {

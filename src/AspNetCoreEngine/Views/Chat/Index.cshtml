@@ -63,35 +63,66 @@
                         </template>
                         <el-menu-item-group>
                             <span slot="title">在线好友</span>
-                            <el-menu-item 
-                                          v-for="item in users" 
-                                          :key="item.value" 
-                                          :index="item.value" 
+                            <el-menu-item v-for="item in users"
+                                          :key="item.value"
+                                          :index="item.value"
                                           @@click="itemclick(item.value)">{{item.name}}</el-menu-item>
                         </el-menu-item-group>
-                        
+
                     </el-submenu>
 
                 </el-menu>
             </el-aside>
-            <el-main>1</el-main>
+            <el-main>
+                <el-tabs type="border-card" style="height:80%">
+                    <el-tab-pane>
+                        <span slot="label"><i class="el-icon-date"></i> 聊天室</span>
+                        <div>
+
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="消息中心">消息中心</el-tab-pane>
+                    <el-tab-pane label="角色管理">角色管理</el-tab-pane>
+                    <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
+                </el-tabs>
+                <el-row  style="height:20%">
+                    
+                    <el-col span="22">
+                        <el-input type="textarea"
+                                  :rows="4"
+                                  placeholder="请输入聊天内容"
+                                  v-model="textarea">
+                        </el-input>
+                    </el-col>
+                    <el-col span="2">
+                        <el-button style="height:90px;width:100%" type="success"  size="medium">发送</el-button>
+                    </el-col>
+                </el-row>
+
+            </el-main>
         </el-container>
 
-        <el-footer>status:connected<i class="el-icon-success" style="color:green"></i></el-footer>
+        <el-footer>
+           
+            status:connected<i class="el-icon-success" style="color:green"></i>
+
+        </el-footer>
     </el-container>
 </div>
 
 @section Js{
 
     <script>
-
-        new Vue({
+        var socket;
+        
+        var v = new Vue({
             el: '#app'
             ,
             data: {
                 isCollapse: false,
                 users: [{ name: 'ny', value: '123' },
-                { name: 'ny1', value: '1231' }]
+                    { name: 'ny1', value: '1231' }],
+                connected : false,
             },
             methods: {
                 handleOpen(key, keyPath) {
@@ -106,9 +137,40 @@
                 itemclick(val) {
                     console.log(val);
                 }
+            },
+            mounted: function () {
+                var that = this;
+                that.$message({
+                    showClose: true,
+                    message: '开始连接服务器',
+                    type: 'success'
+                });
+
+                var scheme = document.location.protocol == "https:" ? "wss" : "ws";
+                var port = document.location.port ? (":" + document.location.port) : "";
+                var url = scheme + "://" + document.location.hostname + port;
+                socket = new WebSocket(url);
+                socket.onopen = function (event) {
+                    console.log(socket.readyState);
+                    that.$message({
+                        showClose: true,
+                        message: '连接成功',
+                        type: 'success'
+                    });
+                };
+                socket.onclose = function (event) {
+                    console.log(socket.readyState);
+                };
+                socket.onerror = function (event) {
+                    console.log(socket.readyState);
+                };
+                socket.onmessage = function (event) {
+                    console.log(socket.readyState);
+                };
             }
 
         })
+
 
     </script>
 

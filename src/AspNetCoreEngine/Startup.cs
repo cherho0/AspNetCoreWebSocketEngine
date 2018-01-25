@@ -38,11 +38,11 @@ namespace AspNetCoreEngine
         {
             // Add framework services.
             services.AddDistributedMemoryCache();
-            services.AddSession(x =>
+            services.AddSession(x=>
             {
-                x.CookieName = "wsapp";
-                x.IdleTimeout = TimeSpan.FromMinutes(20);
-            });
+                x.CookieName = "wsappid";
+                x.IdleTimeout = TimeSpan.FromHours(9999);
+                });
             services.AddMvc();
             services.AddMemoryCache();
 
@@ -72,21 +72,15 @@ namespace AspNetCoreEngine
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             //Echo
-            LogService.Init(loggerFactory.CreateLogger(typeof(Startup)));
-            LogService.LogInfo("sys init");
-            LogService.LogInfo("sys init1");
-            LogService.LogInfo("sys init2");
-            LogService.LogInfo("sys init3");
+            LogService.Init(loggerFactory.CreateLogger(typeof(Startup)));           
 
             //启用session
             app.UseSession();
+            
 
             //获取缓存服务
             var cacheHelper = app.ApplicationServices.GetService<IMemoryCache>();
             //获取session服务
-            var sessionHelper = app.ApplicationServices.GetService<ISession>();
-
-           
 
 
 

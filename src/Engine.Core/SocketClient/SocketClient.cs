@@ -9,7 +9,7 @@ using TestServices;
 
 namespace Engine.Core.SocketClient
 {
-    internal class SocketClient
+    public class SocketClient
     {
         /// <summary>
         /// ip

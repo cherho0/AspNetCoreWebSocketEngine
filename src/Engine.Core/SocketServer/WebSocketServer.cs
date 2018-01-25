@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Engine.Common;
@@ -11,6 +12,8 @@ namespace Engine.Core.SocketServer
     public class WebSocketServer
     {
         private IApplicationBuilder _app;
+
+        private Dictionary<string, BasePub> Pubs = new Dictionary<string, BasePub>();
 
         //构造函数
         public WebSocketServer()
@@ -59,6 +62,23 @@ namespace Engine.Core.SocketServer
                 //await e.Arg2.SendMsg(e.Arg1);
             });
             Console.WriteLine(e.Arg1);
+        }
+
+        internal void InitPubs()
+        {
+            Pubs = new Dictionary<string, BasePub>();
+        }
+
+        internal void RegPub(BasePub pub)
+        {
+            if (!Pubs.ContainsKey(pub.Route))
+            {
+                Pubs.Add(pub.Route, pub);
+            }
+            else
+            {
+                throw new Exception($"the pub {pub.Route} had added, please check your code! ");
+            }
         }
     }
 }

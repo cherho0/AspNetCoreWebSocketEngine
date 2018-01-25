@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Engine.Core.SocketClient
 {
-    internal class SocketClientMgr
+    public class SocketClientMgr
     {
         private static object o = new object();
 

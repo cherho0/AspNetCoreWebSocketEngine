@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Engine.Core.Users;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreEngine.Controllers
@@ -10,19 +12,31 @@ namespace AspNetCoreEngine.Controllers
     {
         public IActionResult Index()
         {
+            if (UserMgr.GetUserBySId(Request.HttpContext.Session.Id) == null)
+            {
+                return RedirectToAction("login");
+            }
+
             return View();
         }
 
 
         public IActionResult Login()
         {
+            var id = Request.HttpContext.Session.Id;
             return View();
         }
 
         [HttpPost]
         public IActionResult Login(string name, string password)
         {
+            UserMgr.AddUser(new LoginUser
+            {
+                Name = name,
+                Password = password,
+                SessionId = Request.HttpContext.Session.Id
 
+            });
             return Json(new { ok = true });
         }
     }
