@@ -75,13 +75,14 @@
             </el-aside>
             <el-main>
                 <el-tabs type="border-card" style="height:80%">
-                    <el-tab-pane>
+                    <el-tab-pane style="overflow:auto;">
                         <span slot="label"><i class="el-icon-date"></i> 聊天室</span>
-                        <div>
+                        <div style="background-color:#f0f0f0;height:100%;">
                             <ul>
-                                <li v-for="item in msgs">
-                                    <label>{{item.from}} : </label>
-                                    <label>{{item.msg}}</label>
+                                <li v-for="item in msgs" style="padding:2px; vertical-align:central;">
+                                    <span style="color:#808080;vertical-align:central;">{{item.from}} : </span>
+                                    <span style="color:#000;margin:5px;vertical-align:central;
+background-color :white;border-radius: 5px 5px;">{{item.msg}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -90,14 +91,13 @@
                     <el-tab-pane label="角色管理">角色管理</el-tab-pane>
                     <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
                 </el-tabs>
-                <el-row  style="height:20%">
-                    
+                <el-row style="height:20%">
+
                     <el-col id="txtinput" :span="22">
                         <el-input type="textarea"
                                   :rows="4"
                                   placeholder="请输入聊天内容"
-                                  v-model="msg"
-                                  >
+                                  v-model="msg">
                         </el-input>
                     </el-col>
                     <el-col :span="2">
@@ -109,7 +109,7 @@
         </el-container>
 
         <el-footer>
-           
+
             status:connected<i class="el-icon-success" style="color:green"></i>
 
         </el-footer>
@@ -120,7 +120,7 @@
 
     <script>
         var socket;
-        
+
         var v = new Vue({
             el: '#app'
             ,
@@ -129,7 +129,7 @@
                 users: [],
                 connected: false,
                 msg: "",
-                msgs: new Array({from:"ny",msg:"hello"})
+                msgs: new Array({ from: "ny", msg: "hello" })
             },
             methods: {
                 handleOpen(key, keyPath) {
@@ -145,7 +145,7 @@
                     console.log(val);
                 },
                 msgEvent(msg) {
-                    
+
                     //console.log(msg);
                     var cmd = msg.cmd;
                     var content = msg.msg;
@@ -156,10 +156,10 @@
                         this.msgs.push({ from: content.from, msg: content.msg });
                     }
                 },
-                sendMsg() { 
+                sendMsg() {
                     var val = this.msg;
                     socket.send(
-                        JSON.stringify( { cmd: "toall", msg: val })
+                        JSON.stringify({ cmd: "toall", msg: val })
                     );
                 }
             },
@@ -191,7 +191,7 @@
                 };
                 socket.onmessage = function (event) {
                     that.msgEvent(JSON.parse(event.data));
-                    
+
                 };
             }
 
