@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Engine.Common;
+using Engine.Core.Users;
 using Microsoft.AspNetCore.Http;
 using TestServices;
 
@@ -22,6 +23,14 @@ namespace Engine.Core.SocketClient
 
         public WebSocket Socket { get; set; }
         public HttpContext Context { get; set; }
+
+        public LoginUser User
+        {
+            get
+            {
+                return UserMgr.GetUserBySId(SessionId);
+            }
+        }
 
         /// <summary>
         /// 当收到消息

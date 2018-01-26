@@ -43,14 +43,18 @@ namespace Engine.Core.SocketServer
         {
             Console.WriteLine(e.Arg1);
             SocketClientMgr.Instance.Remove(e.Arg1);
+            foreach (var item in Pubs.Values)
+            {
+                item.RaiseClose(e.Arg2);
+            }
         }
 
         private void Client_OnConnect(object sender, DataEventArgs<string, SocketClient.SocketClient> e)
         {
-            //Task.Factory.StartNew(async () =>
-            //{
-            //    await SocketClientMgr.Instance.SendAll(e.Arg1 + "连接上了");
-            //});
+            foreach (var item in Pubs.Values)
+            {
+                item.RaiseConnect(e.Arg2);
+            }
             Console.WriteLine(e.Arg1);
         }
 
@@ -61,14 +65,25 @@ namespace Engine.Core.SocketServer
                await SocketClientMgr.Instance.SendAll(e.Arg1);
                 //await e.Arg2.SendMsg(e.Arg1);
             });
+            foreach (var item in Pubs.Values)
+            {
+                item.RaiseReveive(e.Arg2,e.Arg1);
+            }
             Console.WriteLine(e.Arg1);
         }
 
+        /// <summary>
+        /// 初始化集线器
+        /// </summary>
         internal void InitPubs()
         {
             Pubs = new Dictionary<string, BasePub>();
         }
 
+        /// <summary>
+        /// 注册集线器
+        /// </summary>
+        /// <param name="pub"></param>
         internal void RegPub(BasePub pub)
         {
             if (!Pubs.ContainsKey(pub.Route))

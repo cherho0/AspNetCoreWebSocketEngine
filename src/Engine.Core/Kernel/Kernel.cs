@@ -6,21 +6,27 @@ using Engine.Core.SocketServer;
 using Microsoft.AspNetCore.Builder;
 using Engine.Common;
 using Microsoft.AspNetCore.Http;
+using Engine.Core.SocketClient;
+using Engine.Core.Users;
 
 namespace Engine.Core.Kernel
 {
     public static class KernelExt
     {
 
+        /// <summary>
+        /// 使用websocket
+        /// </summary>
+        /// <param name="app"></param>
         public static void UseWebSocketKernel(this IApplicationBuilder app)
         {
-            Kernel.CreateKernel(app);
+            var knl = Kernel.CreateKernel(app);
         }
 
 
     }
 
-    public class Kernel : IKernel
+    internal class Kernel : IKernel
     {
         private WebSocketServer _server;
         private IApplicationBuilder _app;
@@ -71,7 +77,54 @@ namespace Engine.Core.Kernel
         public void RegPubs<T>() where T : BasePub
         {
             var instance = System.Activator.CreateInstance<T>();
+            instance.SetKnl(this);
             _server.RegPub((BasePub)instance);
+        }
+
+        /// <summary>
+        /// 获取客户端
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public SocketClient.SocketClient GetClient(string name)
+        {
+            var user = UserMgr.GetUserByName(name);
+            var client = SocketClientMgr.Instance.GetClient(user.SessionId);
+            return client;
+        }
+
+        /// <summary>
+        /// 发送给某人
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="msg"></param>
+        public async Task SendTo(string name, string msg)
+        {
+            var c = GetClient(name);
+            if (c != null)
+            {
+                await c.SendMsg(msg);
+            }
+        }
+
+        /// <summary>
+        /// 发送给某人
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="msg"></param>
+        public async Task SendTo(SocketClient.SocketClient client, string msg)
+        {
+            await client.SendMsg(msg);
+        }
+
+        /// <summary>
+        /// 发给所有人
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public async Task SendAll(string msg)
+        {
+            await SocketClientMgr.Instance.SendAll(msg);
         }
     }
 }

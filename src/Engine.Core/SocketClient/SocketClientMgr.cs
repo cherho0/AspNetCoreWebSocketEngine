@@ -33,6 +33,11 @@ namespace Engine.Core.SocketClient
             _accclients = new Dictionary<string, SocketClient>();
         }
 
+        public SocketClient GetClient(string sessionid)
+        {
+            return _sessionclients.ContainsKey(sessionid) ? _sessionclients[sessionid] : null;
+        }
+
         public void AddClient(SocketClient client)
         {
             _sessionclients.Add(client.SessionId, client);
