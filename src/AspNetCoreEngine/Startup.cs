@@ -16,6 +16,7 @@ using TestServices;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using Microsoft.Extensions.Caching.Memory;
+using AspNetCoreEngine.Filter;
 
 namespace AspNetCoreEngine
 {
@@ -33,28 +34,21 @@ namespace AspNetCoreEngine
 
         public IConfigurationRoot Configuration { get; }
 
+        public IServiceCollection Services;
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Services = services;
             // Add framework services.
             services.AddDistributedMemoryCache();
-            services.AddSession(x=>
+            services.AddSession(x =>
             {
                 x.CookieName = "wsappid";
                 x.IdleTimeout = TimeSpan.FromHours(9999);
-                });
+            });
             services.AddMvc();
             services.AddMemoryCache();
-
-            //瞬时
-            services.AddTransient<ICommonService, CommonService>();
-
-
-            //作用域
-            //services.AddScoped<ICommonService, CommonService>();
-
-            //单例
-            //services.AddSingleton<ICommonService, CommonService>();
+            
         }
 
         private WebSocketServer _server;
@@ -72,18 +66,11 @@ namespace AspNetCoreEngine
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             //Echo
-            LogService.Init(loggerFactory.CreateLogger(typeof(Startup)));           
+            LogService.Init(loggerFactory.CreateLogger(typeof(Startup)));
 
             //启用session
             app.UseSession();
             
-
-            //获取缓存服务
-            var cacheHelper = app.ApplicationServices.GetService<IMemoryCache>();
-            //获取session服务
-
-
-
             env.ConfigureNLog("nlog.config");
             loggerFactory.AddNLog();
 
@@ -97,18 +84,14 @@ namespace AspNetCoreEngine
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            
+
             app.UseStaticFiles();
 
-            //使用服务
-            var commonService = app.ApplicationServices.GetService<ICommonService>();
-            var str = commonService.GetWorld();
-            Console.WriteLine(str);
-
+            IKernel knl = null;
 
             //注册websocket服务
-            app.UseWebSocketKernel();
-
+            knl = app.UseWebSocketKernel();
+            Global.Kernel = knl;
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

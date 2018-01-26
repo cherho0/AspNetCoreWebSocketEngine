@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreEngine.Filter;
+using Engine.Core.Kernel;
 using Engine.Core.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +32,8 @@ namespace AspNetCoreEngine.Controllers
         [HttpPost]
         public IActionResult Login(string name, string password)
         {
-            UserMgr.AddUser(new LoginUser
+
+            Global.Kernel.AddUser(new LoginUser
             {
                 Name = name,
                 Password = password,

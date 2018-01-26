@@ -18,9 +18,9 @@ namespace Engine.Core.Kernel
         /// 使用websocket
         /// </summary>
         /// <param name="app"></param>
-        public static void UseWebSocketKernel(this IApplicationBuilder app)
+        public static IKernel UseWebSocketKernel(this IApplicationBuilder app)
         {
-            var knl = Kernel.CreateKernel(app);
+            return Kernel.CreateKernel(app);
         }
 
 
@@ -125,6 +125,29 @@ namespace Engine.Core.Kernel
         public async Task SendAll(string msg)
         {
             await SocketClientMgr.Instance.SendAll(msg);
+        }
+
+        public List<SocketClient.SocketClient> GetAllClients()
+        {
+            return SocketClientMgr.Instance.GetAllClients();
+        }
+
+        /// <summary>
+        /// 获取所有登录用户
+        /// </summary>
+        /// <returns></returns>
+        public List<LoginUser> GetAllUsers()
+        {
+            return UserMgr.GetAllUsers();
+        }
+
+        /// <summary>
+        /// 添加登录人
+        /// </summary>
+        /// <param name="loginUser"></param>
+        public void AddUser(LoginUser loginUser)
+        {
+            UserMgr.AddUser(loginUser);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Engine.Core.Users
@@ -72,6 +73,11 @@ namespace Engine.Core.Users
             {
                 return null;
             }
+        }
+
+        internal static List<LoginUser> GetAllUsers()
+        {
+            return S2Users.Values.ToList();
         }
     }
 }

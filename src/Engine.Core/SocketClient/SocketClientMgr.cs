@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Engine.Core.SocketClient
@@ -71,6 +73,11 @@ namespace Engine.Core.SocketClient
             _sessionclients.Remove(sessionId);
             await client.Close();
 
+        }
+
+        internal List<SocketClient> GetAllClients()
+        {
+            return _sessionclients.Values.ToList();
         }
     }
 }
