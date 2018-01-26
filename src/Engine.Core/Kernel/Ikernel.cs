@@ -28,6 +28,8 @@ namespace Engine.Core.Kernel
         /// <param name="msg"></param>
         Task SendTo(string name, string msg);
 
+        Task SendTo(string name, object msg);
+
         /// <summary>
         /// 添加登录人
         /// </summary>
@@ -40,13 +42,17 @@ namespace Engine.Core.Kernel
         /// <param name="name"></param>
         /// <param name="msg"></param>
         /// <returns></returns>
-        Task SendTo(SocketClient.SocketClient name, string msg);
+        Task SendTo(SocketClient.SocketClient client, string msg);
+
+        Task SendTo(SocketClient.SocketClient client, object msg);
 
         /// <summary>
         /// 发给所有人
         /// </summary>
         /// <param name="msg"></param>
         Task SendAll(string msg);
+
+        Task SendAll(object msg);
 
         /// <summary>
         /// 获取所有客户端

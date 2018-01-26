@@ -60,11 +60,6 @@ namespace Engine.Core.SocketServer
 
         private void Client_OnReceive(object sender, DataEventArgs<string, SocketClient.SocketClient> e)
         {
-            Task.Factory.StartNew(async () =>
-            {
-               await SocketClientMgr.Instance.SendAll(e.Arg1);
-                //await e.Arg2.SendMsg(e.Arg1);
-            });
             foreach (var item in Pubs.Values)
             {
                 item.RaiseReveive(e.Arg2,e.Arg1);

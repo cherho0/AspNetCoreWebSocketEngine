@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Engine.Common;
 using Engine.Core.Users;
 using Microsoft.AspNetCore.Http;
-using TestServices;
 
 namespace Engine.Core.SocketClient
 {

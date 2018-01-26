@@ -8,6 +8,7 @@ using Engine.Common;
 using Microsoft.AspNetCore.Http;
 using Engine.Core.SocketClient;
 using Engine.Core.Users;
+using Newtonsoft.Json;
 
 namespace Engine.Core.Kernel
 {
@@ -148,6 +149,24 @@ namespace Engine.Core.Kernel
         public void AddUser(LoginUser loginUser)
         {
             UserMgr.AddUser(loginUser);
+        }
+
+        public async Task SendTo(string name, object msg)
+        {
+            var msgstr = JsonConvert.SerializeObject(msg);
+            await SendTo(name, msgstr);
+        }
+
+        public async Task SendTo(SocketClient.SocketClient client, object msg)
+        {
+            var msgstr = JsonConvert.SerializeObject(msg);
+            await SendTo(client, msgstr);
+        }
+
+        public async Task SendAll(object msg)
+        {
+            var msgstr = JsonConvert.SerializeObject(msg);
+            await SendAll(msgstr);
         }
     }
 }

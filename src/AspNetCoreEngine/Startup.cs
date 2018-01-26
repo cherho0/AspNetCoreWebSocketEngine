@@ -17,6 +17,7 @@ using NLog.Extensions.Logging;
 using NLog.Web;
 using Microsoft.Extensions.Caching.Memory;
 using AspNetCoreEngine.Filter;
+using TestServices.Pubs;
 
 namespace AspNetCoreEngine
 {
@@ -92,6 +93,9 @@ namespace AspNetCoreEngine
             //注册websocket服务
             knl = app.UseWebSocketKernel();
             Global.Kernel = knl;
+
+            knl.RegPubs<FriendsPub>();
+            knl.RegPubs<ChatPub>();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

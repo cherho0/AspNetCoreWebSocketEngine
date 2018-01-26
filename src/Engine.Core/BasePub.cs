@@ -39,7 +39,7 @@ namespace Engine.Core
         /// <summary>
         /// 集线器路由
         /// </summary>
-        public abstract string Route { get; protected set; }
+        public abstract string Route { get; }
 
         protected virtual void OnLoad(IKernel knl)
         {
@@ -75,6 +75,7 @@ namespace Engine.Core
         internal void RaiseClose(SocketClient.SocketClient client)
         {
             OnClientClosed(client);
+
         }
 
         internal void RaiseConnect(SocketClient.SocketClient client)

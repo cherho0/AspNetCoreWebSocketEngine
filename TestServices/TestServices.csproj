@@ -4,4 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\src\Engine.Common\Engine.Common.csproj" />
+    <ProjectReference Include="..\src\Engine.Core\Engine.Core.csproj" />
+  </ItemGroup>
+
 </Project>

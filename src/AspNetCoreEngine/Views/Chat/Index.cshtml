@@ -64,9 +64,9 @@
                         <el-menu-item-group>
                             <span slot="title">在线好友</span>
                             <el-menu-item v-for="item in users"
-                                          :key="item.value"
-                                          :index="item.value"
-                                          @@click="itemclick(item.value)">{{item.name}}</el-menu-item>
+                                          :key="item.SessionId"
+                                          :index="item.SessionId"
+                                          @@click="itemclick(item.Name)">{{item.Name}}</el-menu-item>
                         </el-menu-item-group>
 
                     </el-submenu>
@@ -78,7 +78,12 @@
                     <el-tab-pane>
                         <span slot="label"><i class="el-icon-date"></i> 聊天室</span>
                         <div>
-
+                            <ul>
+                                <li v-for="item in msgs">
+                                    <label>{{item.from}} : </label>
+                                    <label>{{item.msg}}</label>
+                                </li>
+                            </ul>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="消息中心">消息中心</el-tab-pane>
@@ -87,15 +92,16 @@
                 </el-tabs>
                 <el-row  style="height:20%">
                     
-                    <el-col span="22">
+                    <el-col id="txtinput" :span="22">
                         <el-input type="textarea"
                                   :rows="4"
                                   placeholder="请输入聊天内容"
-                                  v-model="textarea">
+                                  v-model="msg"
+                                  >
                         </el-input>
                     </el-col>
-                    <el-col span="2">
-                        <el-button style="height:90px;width:100%" type="success"  size="medium">发送</el-button>
+                    <el-col :span="2">
+                        <el-button style="height:90px;width:100%" type="success" @@click="sendMsg" size="medium">发送</el-button>
                     </el-col>
                 </el-row>
 
@@ -120,9 +126,10 @@
             ,
             data: {
                 isCollapse: false,
-                users: [{ name: 'ny', value: '123' },
-                    { name: 'ny1', value: '1231' }],
-                connected : false,
+                users: [],
+                connected: false,
+                msg: "",
+                msgs: new Array({from:"ny",msg:"hello"})
             },
             methods: {
                 handleOpen(key, keyPath) {
@@ -136,6 +143,24 @@
                 },
                 itemclick(val) {
                     console.log(val);
+                },
+                msgEvent(msg) {
+                    
+                    //console.log(msg);
+                    var cmd = msg.cmd;
+                    var content = msg.msg;
+                    if (cmd == "updateuser") {
+                        this.users = content;
+                    }
+                    if (cmd == "toall") {
+                        this.msgs.push({ from: content.from, msg: content.msg });
+                    }
+                },
+                sendMsg() { 
+                    var val = this.msg;
+                    socket.send(
+                        JSON.stringify( { cmd: "toall", msg: val })
+                    );
                 }
             },
             mounted: function () {
@@ -165,7 +190,8 @@
                     console.log(socket.readyState);
                 };
                 socket.onmessage = function (event) {
-                    console.log(socket.readyState);
+                    that.msgEvent(JSON.parse(event.data));
+                    
                 };
             }
 
