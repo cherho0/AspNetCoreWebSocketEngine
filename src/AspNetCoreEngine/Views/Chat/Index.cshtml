@@ -75,14 +75,13 @@
             </el-aside>
             <el-main>
                 <el-tabs type="border-card" style="height:80%">
-                    <el-tab-pane style="overflow:auto;">
-                        <span slot="label"><i class="el-icon-date"></i> 聊天室</span>
-                        <div style="background-color:#f0f0f0;height:100%;">
-                            <ul>
-                                <li v-for="item in msgs" style="padding:2px; vertical-align:central;">
-                                    <span style="color:#808080;vertical-align:central;">{{item.from}} : </span>
-                                    <span style="color:#000;margin:5px;vertical-align:central;
-background-color :white;border-radius: 5px 5px;">{{item.msg}}</span>
+                    <el-tab-pane style="height:100%;">
+                        <span slot="label"><i class="el-icon-date"></i> 公共聊天室</span>
+                        <div style="height:100%;position:relative;">
+                            <ul class="messages" v-chat-scroll style="height:100%;overflow-y:scroll;">
+                                <li class="messages" v-for="item in msgs" >
+                                    <span>{{item.from}} : </span>
+                                    <span>{{item.msg}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -117,7 +116,7 @@ background-color :white;border-radius: 5px 5px;">{{item.msg}}</span>
 </div>
 
 @section Js{
-
+    <script src="~/js/vue-chat-scroll.js"></script>
     <script>
         var socket;
 
