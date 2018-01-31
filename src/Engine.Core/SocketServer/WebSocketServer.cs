@@ -23,13 +23,15 @@ namespace Engine.Core.SocketServer
 
         public async Task AddClient(string ip, int port, string sessionId, WebSocket webSocket, HttpContext context)
         {
+            var route = context.Request.Path.ToString().ToLower();
             var client = new SocketClient.SocketClient()
             {
                 Ip = ip,
                 Port = port,
                 SessionId = sessionId,
                 Socket = webSocket,
-                Context = context
+                Context = context,
+                Route = route
             };
 
             SocketClientMgr.Instance.AddClient(client);
@@ -42,7 +44,7 @@ namespace Engine.Core.SocketServer
         private void Client_OnClose(object sender, DataEventArgs<string, SocketClient.SocketClient> e)
         {
             Console.WriteLine(e.Arg1);
-            SocketClientMgr.Instance.Remove(e.Arg1);
+            SocketClientMgr.Instance.Remove(e.Arg1,e.Arg2);
             foreach (var item in Pubs.Values)
             {
                 item.RaiseClose(e.Arg2);
@@ -60,9 +62,10 @@ namespace Engine.Core.SocketServer
 
         private void Client_OnReceive(object sender, DataEventArgs<string, SocketClient.SocketClient> e)
         {
+            var path = e.Arg2.Context.Request.Path;
             foreach (var item in Pubs.Values)
             {
-                item.RaiseReveive(e.Arg2,e.Arg1);
+                item.RaiseReveive(e.Arg2, e.Arg1);
             }
             Console.WriteLine(e.Arg1);
         }

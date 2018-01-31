@@ -87,7 +87,7 @@ namespace Engine.Core.Kernel
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public SocketClient.SocketClient GetClient(string name)
+        public List<SocketClient.SocketClient> GetClients(string name)
         {
             var user = UserMgr.GetUserByName(name);
             var client = SocketClientMgr.Instance.GetClient(user.SessionId);
@@ -101,10 +101,14 @@ namespace Engine.Core.Kernel
         /// <param name="msg"></param>
         public async Task SendTo(string name, string msg)
         {
-            var c = GetClient(name);
-            if (c != null)
+            var cs = GetClients(name);
+            if (cs != null && cs.Count > 0)
             {
-                await c.SendMsg(msg);
+                foreach (var c in cs)
+                {
+                    await c.SendMsg(msg);
+                }
+
             }
         }
 
@@ -128,7 +132,7 @@ namespace Engine.Core.Kernel
             await SocketClientMgr.Instance.SendAll(msg);
         }
 
-        public List<SocketClient.SocketClient> GetAllClients()
+        public List<List<SocketClient.SocketClient>> GetAllClients()
         {
             return SocketClientMgr.Instance.GetAllClients();
         }

@@ -26,56 +26,77 @@ namespace Engine.Core.SocketClient
 
         private static SocketClientMgr _instance = null;
 
-        private Dictionary<string, SocketClient> _sessionclients;
-        private Dictionary<string, SocketClient> _accclients;
+        private Dictionary<string, List<SocketClient>> _sessionclients;
 
         private SocketClientMgr()
         {
-            _sessionclients = new Dictionary<string, SocketClient>();
-            _accclients = new Dictionary<string, SocketClient>();
+            _sessionclients = new Dictionary<string, List<SocketClient>>();
         }
 
-        public SocketClient GetClient(string sessionid)
+        public List<SocketClient> GetClient(string sessionid)
         {
             return _sessionclients.ContainsKey(sessionid) ? _sessionclients[sessionid] : null;
         }
 
         public void AddClient(SocketClient client)
         {
-            _sessionclients.Add(client.SessionId, client);
+            if (!_sessionclients.ContainsKey(client.SessionId))
+            {
+                _sessionclients.Add(client.SessionId, new List<SocketClient>());
+            }
+            _sessionclients[client.SessionId].Add(client);
         }
 
         public async Task SendAll(string msg)
         {
-            foreach (var client in _sessionclients.Values)
+            foreach (var clients in _sessionclients.Values)
             {
-                await client.SendMsg(msg);
+                foreach (var c in clients)
+                {
+                    await c.SendMsg(msg);
+
+                }
             }
         }
 
         public async Task SendTo(string sessionid, string msg)
         {
-            var client = _sessionclients[sessionid];
-            await client.SendMsg(msg);
-
+            var clients = _sessionclients[sessionid];
+            foreach (var c in clients)
+            {
+                await c.SendMsg(msg);
+            }
         }
 
-        public void Remove(string eArg1)
+        public void Remove(string eArg1, SocketClient c)
         {
-            var client = _sessionclients[eArg1];
-            _sessionclients.Remove(eArg1);
+            var clients = _sessionclients[eArg1];
+            for (int i = clients.Count - 1; i >= 0; i--)
+            {
+                if (c.Ip == clients[i].Ip && c.Port == clients[i].Port)
+                {
+                    clients.RemoveAt(i);
+                }
+            }
+            if (clients.Count == 0)
+            {
+                _sessionclients.Remove(eArg1);
+            }
 
         }
 
         public async Task CloseAsync(string sessionId)
         {
-            var client = _sessionclients[sessionId];
+            var clients = _sessionclients[sessionId];
             _sessionclients.Remove(sessionId);
-            await client.Close();
+            foreach (var client in clients)
+            {
+                await client.Close();
+            }
 
         }
 
-        internal List<SocketClient> GetAllClients()
+        internal List<List<SocketClient>> GetAllClients()
         {
             return _sessionclients.Values.ToList();
         }

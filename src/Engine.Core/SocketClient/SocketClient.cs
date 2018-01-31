@@ -23,6 +23,8 @@ namespace Engine.Core.SocketClient
         public WebSocket Socket { get; set; }
         public HttpContext Context { get; set; }
 
+        public string Route { get; set; }
+
         public LoginUser User
         {
             get

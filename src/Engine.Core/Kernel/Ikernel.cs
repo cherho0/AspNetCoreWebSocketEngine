@@ -19,7 +19,7 @@ namespace Engine.Core.Kernel
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        SocketClient.SocketClient GetClient(string name);
+        List<SocketClient.SocketClient> GetClients(string name);
 
         /// <summary>
         /// 发给 某个人
@@ -58,7 +58,7 @@ namespace Engine.Core.Kernel
         /// 获取所有客户端
         /// </summary>
         /// <returns></returns>
-        List<SocketClient.SocketClient> GetAllClients();
+        List<List<SocketClient.SocketClient>> GetAllClients();
 
         /// <summary>
         /// 获取所有用户
