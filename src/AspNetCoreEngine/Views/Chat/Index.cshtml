@@ -28,6 +28,72 @@
 
     body > .el-container {
     }
+
+    .messages {
+        list-style: none;
+        font-family:微软雅黑;
+        font-size:12px;
+        vertical-align:central;
+    }
+
+    .messages {
+        overflow: auto;
+        padding: 5px;
+    }
+
+        .messages li {
+            margin-top: 10px;
+            padding-left: 10px;
+            display: block;
+            clear: both;
+            overflow: hidden;
+        }
+
+            .messages li img {
+                float: left;
+            }
+            .messages li label {
+                float: left;
+                padding: 10px 0px 10px 10px;
+                margin: 6px 0px 0 10px;
+            }
+
+            .messages li span {
+                background: #7cfc00;
+                padding: 10px;
+                border-radius: 10px;
+                float: left;
+                margin: 6px 10px 0 10px;
+                max-width: 310px;
+                border: 1px solid #ccc;
+                box-shadow: 0 0 3px #ccc;
+            }
+
+            .messages li img.imgleft {
+                float: left;
+            }
+
+            .messages li img.imgright {
+                float: right;
+            }
+
+            .messages li label.imgleft {
+                float: left;
+            }
+
+            .messages li label.imgright {
+                float: right;
+            }
+
+            .messages li span.spanleft {
+                float: left;
+                background: #7cfc00;
+            }
+
+            .messages li span.spanright {
+                float: right;
+                background: #7cfc00;
+            }   
 </style>
 
 <div id="app">
@@ -66,9 +132,9 @@
                         <span slot="label"><i class="el-icon-date"></i> 公共聊天室</span>
                         <div style="height:280px;">
                             <ul class="messages" v-chat-scroll style="height:260px;overflow-y:scroll;">
-                                <li class="messages" v-for="item in msgs">
-                                    <span>{{item.from}} : </span>
-                                    <span>{{item.msg}}</span>
+                                <li v-for="item in msgs">
+                                    <label class="imgleft">{{item.from}} : </label>
+                                    <span class="spanleft">{{item.msg}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -122,7 +188,7 @@
                 users: [],
                 connected: false,
                 msg: "",
-                msgs: new Array({ from: "ny", msg: "hello" })
+                msgs: new Array({ from: "服务器", msg: "请输入文本点击发送！" })
             },
             methods: {
                 handleOpen(key, keyPath) {
