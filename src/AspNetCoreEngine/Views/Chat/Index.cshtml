@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Index";
 }
+@model Engine.Core.Users.LoginUser
 <style>
     .el-header, .el-footer {
         background-color: #DDF0ED;
@@ -23,7 +24,7 @@
         border: 1px solid #808080;
         color: #333;
         height: 500px;
-       overflow-y:hidden;
+        overflow-y: hidden;
     }
 
     body > .el-container {
@@ -31,9 +32,9 @@
 
     .messages {
         list-style: none;
-        font-family:微软雅黑;
-        font-size:12px;
-        vertical-align:central;
+        font-family: 微软雅黑;
+        font-size: 12px;
+        vertical-align: central;
     }
 
     .messages {
@@ -52,6 +53,7 @@
             .messages li img {
                 float: left;
             }
+
             .messages li label {
                 float: left;
                 padding: 10px 0px 10px 10px;
@@ -93,10 +95,111 @@
             .messages li span.spanright {
                 float: right;
                 background: #7cfc00;
-            }   
+            }
 </style>
+<style>
+    [v-cloak] {
+        display: none;
+    }
+    /*仿微信聊天框样式*/
+    *, *:before, *:after {
+        box-sizing: border-box;
+    }
 
-<div id="app">
+    ul {
+        list-style: none;
+    }
+
+    body, ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    .m-message {
+        /*height: calc(100% - 10pc);*/
+        height: 280px;
+    }
+
+    .m-message {
+        padding: 10px 15px;
+        overflow-y: scroll
+    }
+
+        .m-message li {
+            margin-bottom: 15px
+        }
+
+        .m-message .time {
+            margin: 7px 0;
+            text-align: center
+        }
+
+            .m-message .time > span {
+                display: inline-block;
+                padding: 0 18px;
+                font-size: 9pt;
+                color: #fff;
+                border-radius: 2px;
+                background-color: #dcdcdc
+            }
+
+        .m-message .avatar {
+            float: left;
+            margin: 0 10px 0 0;
+            border-radius: 3px
+        }
+
+        .m-message .name {
+            position: relative;
+            display: block;
+            font-size: 9pt;
+            padding: 0 0 5px 0;
+        }
+
+        .m-message .text {
+            display: inline-block;
+            position: relative;
+            padding: 0 10px;
+            max-width: calc(100% - 40px);
+            min-height: 30px;
+            line-height: 2.5;
+            font-size: 9pt;
+            text-align: left;
+            word-break: break-all;
+            background-color: #fafafa;
+            border-radius: 4px
+        }
+
+            .m-message .text:before {
+                content: " ";
+                position: absolute;
+                top: 9px;
+                right: 100%;
+                border: 6px solid transparent;
+                border-right-color: #fafafa
+            }
+
+        .m-message .self {
+            text-align: right
+        }
+
+            .m-message .self .avatar {
+                float: right;
+                margin: 0 0 0 10px
+            }
+
+            .m-message .self .text {
+                background-color: #b2e281
+            }
+
+                .m-message .self .text:before {
+                    right: inherit;
+                    left: 100%;
+                    border-right-color: transparent;
+                    border-left-color: #b2e281
+                }
+</style>
+<div id="app" v-cloak>
     <el-container>
         <el-header>Asp.Net Core WebSocket Engine</el-header>
         <el-container>
@@ -130,16 +233,28 @@
                 <el-tabs type="border-card" style="height:350px">
                     <el-tab-pane style="height:330px;">
                         <span slot="label"><i class="el-icon-date"></i> 公共聊天室</span>
-                        <div style="height:280px;">
-                            <ul class="messages" v-chat-scroll style="height:260px;overflow-y:scroll;">
+                        @*<div style="height:280px;">
+                                <ul class="messages" v-chat-scroll style="height:260px;overflow-y:scroll;">
+                                    <li v-for="item in msgs">
+                                        <label class="imgleft">{{item.from}} : </label>
+                                        <span class="spanleft">{{item.msg}}</span>
+                                    </li>
+                                </ul>
+                            </div>*@
+                        <div class="m-message" v-chat-scroll>
+                            <ul>
+                                <!--v-for-start-->
                                 <li v-for="item in msgs">
-                                    <label class="imgleft">{{item.from}} : </label>
-                                    <span class="spanleft">{{item.msg}}</span>
-                                </li>
+                                    <p class="time"><span>{{new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()}}</span></p>
+                                    <div :class="name==item.from?'main self':'main'">
+                                        <img class="avatar" width="30" height="30" src="/images/1.jpg">
+                                        <div class="name">{{item.from}}</div>
+                                        <div class="text">{{item.msg}}</div>
+                                    </div>
+                                </li><!--v-for-end-->
                             </ul>
                         </div>
                     </el-tab-pane>
-                   
                 </el-tabs>
                 <el-row style="height:100px;background-color:#f2f2f2;border:1px;">
                     <el-col style="padding:2px 10px 2px 10px;">
@@ -166,7 +281,7 @@
                 status:connected<i class="el-icon-success" style="color:green"></i>
 
             </span>
-            <span  v-else>
+            <span v-else>
                 status:closed<i class="el-icon-warning" style="color:red"></i>
             </span>
         </el-footer>
@@ -177,7 +292,6 @@
     <script src="~/js/vue-chat-scroll.js"></script>
     <script>
         var socket;
-
         var v = new Vue({
             el: '#app'
             ,
@@ -186,7 +300,8 @@
                 users: [],
                 connected: false,
                 msg: "",
-                msgs: new Array({ from: "服务器", msg: "请输入文本点击发送！" })
+                msgs: new Array({ from: "服务器", msg: "请输入文本点击发送！" }),
+                name:'@Html.Raw(Model.Name)'
             },
             methods: {
                 handleOpen(key, keyPath) {

@@ -14,12 +14,12 @@ namespace AspNetCoreEngine.Controllers
     {
         public IActionResult Index()
         {
-            if (UserMgr.GetUserBySId(Request.HttpContext.Session.Id) == null)
+            var User = UserMgr.GetUserBySId(Request.HttpContext.Session.Id);
+            if (User == null)
             {
                 return RedirectToAction("login");
             }
-
-            return View();
+            return View(User);
         }
 
 
