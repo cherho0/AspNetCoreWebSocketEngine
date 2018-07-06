@@ -1,13 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <AssemblyName>AspNetCoreEngine</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>AspNetCoreEngine</PackageId>
     <RuntimeFrameworkVersion>2.0.0</RuntimeFrameworkVersion>
-    <StartupObject>AspNetCoreEngine.Program</StartupObject>
+    <StartupObject></StartupObject>
+    <ApplicationIcon />
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,30 +24,31 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.WebSockets.Server" Version="0.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.0.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
-    <PackageReference Include="NLog" Version="4.5.0-beta07" />
-    <PackageReference Include="NLog.Config" Version="4.5.0-beta07" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="4.5.0-beta04" />
-    <PackageReference Include="TCBase.Component.Logging" Version="1.4.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="NLog" Version="4.5.6" />
+    <PackageReference Include="NLog.Config" Version="4.5.6" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.5.4" />
+    <PackageReference Include="TCBase.Component.Logging" Version="1.4.10" />
   </ItemGroup>
 
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
@@ -54,8 +56,5 @@
     <Exec Command="dotnet bundle" />
   </Target>
 
-  <ItemGroup>
-    <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
-  </ItemGroup>
 
 </Project>

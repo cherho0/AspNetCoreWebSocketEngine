@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -39,7 +40,17 @@ namespace AspNetCoreEngine
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
             Services = services;
+
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
+
             // Add framework services.
             services.AddDistributedMemoryCache();
             services.AddSession(x =>
@@ -47,9 +58,9 @@ namespace AspNetCoreEngine
                 x.CookieName = "wsappid";
                 x.IdleTimeout = TimeSpan.FromHours(9999);
             });
-            services.AddMvc();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMemoryCache();
-            
+
         }
 
         private WebSocketServer _server;
@@ -71,7 +82,7 @@ namespace AspNetCoreEngine
 
             //启用session
             app.UseSession();
-            
+
             env.ConfigureNLog("nlog.config");
             loggerFactory.AddNLog();
 
@@ -79,15 +90,16 @@ namespace AspNetCoreEngine
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
+                //app.UseBrowserLink();
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
-
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseCookiePolicy();
             IKernel knl = null;
 
             //注册websocket服务

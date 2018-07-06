@@ -1,4 +1,5 @@
 ﻿using Engine.Common;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.IO;
@@ -15,15 +16,20 @@ namespace AspNetCoreEngine
             Cfg.Init();
             Task.Factory.StartNew(Call);
             var port = Cfg.GetCfg<int>("Port");
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseStartup<Startup>()
-                .UseUrls("http://*:"+ port + "/")
-                .Build();
+            CreateWebHostBuilder(args).UseUrls("http://*:" + port + "/").Build().Run();
+            //var host = new WebHostBuilder()
+            //    .UseKestrel()
+            //    .UseContentRoot(Directory.GetCurrentDirectory())
+            //    .UseStartup<Startup>()
+            //    .UseUrls("http://*:"+ port + "/")
+            //    .Build();
 
-            host.Run();
+            //host.Run();
         }
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>();
 
         private static void Call()
         {
