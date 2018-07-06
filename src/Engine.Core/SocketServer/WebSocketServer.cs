@@ -44,7 +44,7 @@ namespace Engine.Core.SocketServer
         private void Client_OnClose(object sender, DataEventArgs<string, SocketClient.SocketClient> e)
         {
             Console.WriteLine(e.Arg1);
-            SocketClientMgr.Instance.Remove(e.Arg1,e.Arg2);
+            SocketClientMgr.Instance.Remove(e.Arg1, e.Arg2);
             foreach (var item in Pubs.Values)
             {
                 item.RaiseClose(e.Arg2);
@@ -63,6 +63,18 @@ namespace Engine.Core.SocketServer
         private void Client_OnReceive(object sender, DataEventArgs<string, SocketClient.SocketClient> e)
         {
             var path = e.Arg2.Context.Request.Path;
+            var pubkey = (path.HasValue ? path.Value : "").Replace("/", "");
+            if (!string.IsNullOrWhiteSpace(pubkey))
+            {
+                var pub = Pubs[pubkey];
+                if (pub != null)
+                {
+                    pub.RaiseReveive(e.Arg2, e.Arg1);
+                }
+                Console.WriteLine(e.Arg1);
+                return;
+            }
+
             foreach (var item in Pubs.Values)
             {
                 item.RaiseReveive(e.Arg2, e.Arg1);
@@ -84,9 +96,9 @@ namespace Engine.Core.SocketServer
         /// <param name="pub"></param>
         internal void RegPub(BasePub pub)
         {
-            if (!Pubs.ContainsKey(pub.Route))
+            if (!Pubs.ContainsKey(pub.Route.ToLower()))
             {
-                Pubs.Add(pub.Route, pub);
+                Pubs.Add(pub.Route.ToLower(), pub);
             }
             else
             {

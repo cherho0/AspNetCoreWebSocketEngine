@@ -346,7 +346,7 @@
 
                 var scheme = document.location.protocol == "https:" ? "wss" : "ws";
                 var port = document.location.port ? (":" + document.location.port) : "";
-                var url = scheme + "://" + document.location.hostname + port;//+"/chat";
+                var url = scheme + "://" + document.location.hostname + port+"/chat";
                 socket = new WebSocket(url);
                 socket.onopen = function (event) {
                     console.log(socket.readyState);
