@@ -102,7 +102,7 @@ namespace Engine.Core.SocketServer
             }
             else
             {
-                throw new Exception($"the pub {pub.Route} had added, please check your code! ");
+                throw new Exception($"the pub {pub.Route} has been added, please check your code! ");
             }
         }
     }
