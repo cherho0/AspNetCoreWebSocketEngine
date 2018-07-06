@@ -2,7 +2,7 @@
 Asp.Net Core WebSocket Engine
 基于这个架构快速创建可以运行于linux服务器的 。net core websocket 服务器，实现即时通信
 
-# 初次使用只需要2行代码，启动你的服务，注册全局的kernel可以方便你随时随地通过kernel获取用户和客户端信息：
+## 初次使用只需要2行代码，启动你的服务，注册全局的kernel可以方便你随时随地通过kernel获取用户和客户端信息：
             //注册websocket服务
             knl = app.UseWebSocketKernel();
             Global.Kernel = knl;
@@ -37,7 +37,7 @@ Asp.Net Core WebSocket Engine
             }
 
 
-# 你可以专注于编写你的pub，类似于signalR的pub，继承于BasePub，去重写相应的方法，用来获取信息或者注册用户：
+## 你可以专注于编写你的pub，类似于signalR的pub，继承于BasePub，去重写相应的方法，用来获取信息或者注册用户：
         
         
         
