@@ -44,12 +44,12 @@ namespace AspNetCoreEngine
 
             Services = services;
 
-            //services.Configure<CookiePolicyOptions>(options =>
-            //{
-            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-            //    options.CheckConsentNeeded = context => true;
-            //    options.MinimumSameSitePolicy = SameSiteMode.None;
-            //});
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                //是否要存储cookie  GDRP协议 默认不存储 改为true就不存了，我们用到了cookie 就需要用
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
 
             // Add framework services.
             services.AddDistributedMemoryCache();
