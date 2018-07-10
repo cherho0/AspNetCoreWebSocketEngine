@@ -17,14 +17,7 @@ namespace AspNetCoreEngine
             Task.Factory.StartNew(Call);
             var port = Cfg.GetCfg<int>("Port");
             CreateWebHostBuilder(args).UseUrls("http://*:" + port + "/").Build().Run();
-            //var host = new WebHostBuilder()
-            //    .UseKestrel()
-            //    .UseContentRoot(Directory.GetCurrentDirectory())
-            //    .UseStartup<Startup>()
-            //    .UseUrls("http://*:"+ port + "/")
-            //    .Build();
-
-            //host.Run();
+            
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
